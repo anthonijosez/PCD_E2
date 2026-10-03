@@ -1,0 +1,17 @@
+Pruebas del aplicativo web (Reto 1) - Equipo 2 - 02/10/2026
+
+Objetivo: verificar los indicadores del aplicativo frente a un cálculo manual en 5 casos con cargas conocidas.
+
+Archivos
+- motor.js y medicion.js: código de cálculo extraído sin cambios de Aplicativo_web.html.
+- casos.json: los 5 casos (cargas, horarios, días de operación y costo unitario).
+- medicion_caso5.csv: hoja de datos simulada del nodo (cada 10 min, formato ; y coma decimal, con 2 filas inválidas).
+- ejecutar_app.js: ejecuta el motor del aplicativo con los 5 casos -> resultados_app.json.
+- comparar.py: compara los valores calculados a mano con los del aplicativo -> comparacion_manual_vs_app.csv.
+
+Cómo reproducir (Node.js y Python 3):
+  node ejecutar_app.js
+  python3 comparar.py
+
+Cálculo manual: P_inst = suma N*P; E_d = suma N*P*h / 1000; E_m = E_d*dias_mes; E_a = E_d*dias_año; costo = E*CU.
+Alcance: se prueba el motor de cálculo y el lector de la hoja de datos, no la interfaz gráfica (clics).

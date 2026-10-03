@@ -1,0 +1,57 @@
+caso,indicador,manual,aplicativo,diferencia,diferencia_%,resultado
+1,potenciaInstaladaW,290,290,0,0.0000,OK
+1,demandaMaximaW,290,290,0,0.0000,OK
+1,horaDemandaMaximaH,19,19,0,0.0000,OK
+1,energiaDiariaKWh,4.2,4.2,0.0,0.0000,OK
+1,energiaMensualKWh,126,126,0,0.0000,OK
+1,energiaAnualKWh,1533,1533,0,0.0000,OK
+1,costoDiario,3780,3780,0,0.0000,OK
+1,costoMensual,113400,113400,0,0.0000,OK
+1,costoAnual,1379700,1379700,0,0.0000,OK
+1,clasificacion,"['mixta', 'nocturna', 'nocturna']","['mixta', 'nocturna', 'nocturna']",-,-,OK
+2,potenciaInstaladaW,1500,1500,0,0.0000,OK
+2,demandaMaximaW,1380,1380,0,0.0000,OK
+2,horaDemandaMaximaH,0,0,0,0.0000,OK
+2,energiaDiariaKWh,14.52,14.52,0.0,0.0000,OK
+2,energiaMensualKWh,435.6,435.6,-0.0,-0.0000,OK
+2,energiaAnualKWh,5227.2,5227.2,0.0,0.0000,OK
+2,costoDiario,12342,12342,0,0.0000,OK
+2,costoMensual,370260,370260,0,0.0000,OK
+2,costoAnual,4443120,4443120,0,0.0000,OK
+2,clasificacion,"['nocturna', 'diurna', 'mixta']","['nocturna', 'diurna', 'mixta']",-,-,OK
+3,potenciaInstaladaW,5860,5860,0,0.0000,OK
+3,demandaMaximaW,5860,5860,0,0.0000,OK
+3,horaDemandaMaximaH,9,9,0,0.0000,OK
+3,energiaDiariaKWh,55.52,55.52,0.0,0.0000,OK
+3,energiaMensualKWh,1221.44,1221.44,0.0,0.0000,OK
+3,energiaAnualKWh,14657.28,14657.28,0.0,0.0000,OK
+3,costoDiario,55520,55520,0,0.0000,OK
+3,costoMensual,1221440,1221440,0,0.0000,OK
+3,costoAnual,14657280,14657280,0,0.0000,OK
+3,clasificacion,"['diurna', 'diurna', 'mixta', 'mixta']","['diurna', 'diurna', 'mixta', 'mixta']",-,-,OK
+4,potenciaInstaladaW,750,750,0,0.0000,OK
+4,demandaMaximaW,750,750,0,0.0000,OK
+4,horaDemandaMaximaH,6,6,0,0.0000,OK
+4,energiaDiariaKWh,1.5,1.5,0.0,0.0000,OK
+4,energiaMensualKWh,45,45,0,0.0000,OK
+4,energiaAnualKWh,547.5,547.5,0.0,0.0000,OK
+4,costoDiario,0,0,0,0.0000,OK
+4,costoMensual,0,0,0,0.0000,OK
+4,costoAnual,0,0,0,0.0000,OK
+4,clasificacion,['diurna'],['diurna'],-,-,OK
+4,advertenciaCU0,True,True,-,-,OK
+5,potenciaInstaladaW,1350,1350,0,0.0000,OK
+5,demandaMaximaW,1500,1500,0,0.0000,OK
+5,horaDemandaMaximaH,18,18,0,0.0000,OK
+5,energiaDiariaKWh,10.0,10,0.0,0.0000,OK
+5,energiaMensualKWh,300,300,0,0.0000,OK
+5,energiaAnualKWh,3650,3650,0,0.0000,OK
+5,costoDiario,9000,9000,0,0.0000,OK
+5,costoMensual,270000,270000,0,0.0000,OK
+5,costoAnual,3285000,3285000,0,0.0000,OK
+5,clasificacion,"['mixta', 'nocturna']","['mixta', 'nocturna']",-,-,OK
+5,fuentePerfil,medido,medido,-,-,OK
+5,EdEstimada,8.4,8.4,0.0,0.0000,OK
+5,diferenciaPorcentaje,19.047619,19.047619,0.0,0.0000,OK
+5,totalLecturas,144,144,0,0.0000,OK
+5,filasDescartadas,2,2,0,0.0000,OK
