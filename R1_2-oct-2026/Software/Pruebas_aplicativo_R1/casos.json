@@ -1,0 +1,12 @@
+[
+ {"id":1,"nombre":"Vivienda básica (on-grid)","contexto":"on-grid","dm":30,"da":365,"cu":900,
+  "cargas":[["Nevera",1,150,"0-23"],["Bombillos LED",4,10,"18-22"],["Televisor",1,100,"19-22"]]},
+ {"id":2,"nombre":"Vivienda con aire nocturno (cruza medianoche)","contexto":"on-grid","dm":30,"da":360,"cu":850,
+  "cargas":[["Aire acondicionado 12000 BTU",1,1200,"22-23,0-5"],["Ventiladores",2,60,"13-17"],["Nevera",1,180,"0-23"]]},
+ {"id":3,"nombre":"Pequeña empresa (oficina)","contexto":"on-grid","dm":22,"da":264,"cu":1000,
+  "cargas":[["Computadores",6,200,"8-17"],["Aires acondicionados",2,2000,"9-16"],["Luminarias LED",20,18,"7-18"],["Servidor",1,300,"0-23"]]},
+ {"id":4,"nombre":"Caso límite: CU = 0 (sin tarifa)","contexto":"off-grid","dm":30,"da":365,"cu":0,
+  "cargas":[["Bomba de agua",1,750,"6-7"]]},
+ {"id":5,"nombre":"Perfil medido por el nodo (CSV) vs. estimado","contexto":"on-grid","dm":30,"da":365,"cu":900,
+  "cargas":[["Nevera",1,150,"0-23"],["Aire acondicionado",1,1200,"18-21"]],"csv":"medicion_caso5.csv"}
+]
