@@ -12,7 +12,7 @@ CT L1 / CT L2  →  Conectores de CT  →  Acondicionamiento (LM358)  →  ESP32
 Caimanes L1 / L2  →  ZMPT101B  →  Acondicionamiento / ADC  →  ESP32
 ```
 
-> **Alcance de este reto:** se entregan los **valores de diseño** del nodo, según lo acordado con el docente. La medición experimental se realizará el **viernes 23 de octubre de 2026**.
+> **Alcance de este reto:** se entregan los **valores de diseño** del nodo, según lo acordado con el docente. La medición experimental se realizará dias antes del **viernes 23 de octubre de 2026**.
 
 ## Contenido de la carpeta
 
