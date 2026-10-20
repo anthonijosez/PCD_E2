@@ -12,23 +12,22 @@ CT L1 / CT L2  →  Conectores de CT  →  Acondicionamiento (LM358)  →  ESP32
 Caimanes L1 / L2  →  ZMPT101B  →  Acondicionamiento / ADC  →  ESP32
 ```
 
-> **Alcance de este reto:** se entregan los **valores de diseño** del nodo, según lo acordado con el docente. La medición experimental se realizará el **viernes 23 de octubre de 2026**.
+> **Alcance de este reto:** se entregan los **valores de diseño** del nodo, según lo acordado con el docente. La medición experimental se realizará dias antes del **viernes 23 de octubre de 2026**.
 
 ## Contenido de la carpeta
 
 | Carpeta / archivo | Contenido |
 |---|---|
-| `informe/` | Informe técnico estilo hoja de datos (máximo 2 páginas) |
-| `ficha_interactiva/` | Ficha técnica interactiva con el modelo 3D del nodo (`DATASHEET_INTERACTIVO.html`) |
-| `modelo_3d/` | Capturas del modelo: vista exterior, interior y despiece |
+| `Informe/` | Informe técnico estilo hoja de datos (máximo 2 páginas) |
+| `Ficha_tecnica_interactiva/` | Ficha técnica interactiva con el modelo 3D del nodo (`Ficha_interactiva.html`) |
+| `Modelo_3d/` | Capturas del modelo: vista exterior, interior y despiece |
 | `Materiales/` | Lista de materiales con cantidades y precios (`Lista_de_materiales_Reto3.xlsx`) |
-| `datasheets/` | Hojas de datos de los componentes (fuente de los valores de diseño) |
-| `avance/` | Avance de los Retos 1 a 3 (`avance_retos_1_a_3.md`) |
-| `DECISIONES.md` | Registro de decisiones de diseño con fecha |
+| `Avance/` | Avance de los Retos 1 a 3 (`avance_retos_1_a_3.md`) |
+| `/Avance/DECISIONES.md` | Registro de decisiones de diseño con fecha |
 
 ## Cómo ver la ficha interactiva
 
-1. Descargue `ficha_interactiva/DATASHEET_INTERACTIVO.html`.
+1. Descargue `ficha_tecnica_interactiva/Ficha_interactiva.html`.
 2. Ábralo en un navegador (Chrome, Edge o Firefox). No requiere instalación ni conexión.
 3. Arrastre el modelo para girarlo, cambie entre **Exterior**, **Interior** y **Despiece**, y toque un componente para ver su descripción. El botón superior activa el modo noche.
 
