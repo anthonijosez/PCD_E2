@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ficha técnica interactiva · Nodo residencial</title>
+<style>
+:root{--bg:#f5f5f5;--surface:#fff;--surface2:#fafafa;--text:#272727;--muted:#717171;--border:#e5e5e5;--accent:#ee741c;--soft:#fff1e6;--heading:#3a3a3a;--table:#fff3e9;--scene1:#fff;--scene2:#eeeae6;--grid:#c8bbb0;--label:#fffffff2;--labeltext:#6e421f;--glass:#fffffff0}
+body.dark{--bg:#151515;--surface:#202020;--surface2:#262626;--text:#eee;--muted:#aaa;--border:#3a3a3a;--accent:#ff913f;--soft:#3a291e;--heading:#f1f1f1;--table:#32271f;--scene1:#35302b;--scene2:#1b1b1b;--grid:#6d5e51;--label:#272727f2;--labeltext:#ffc18d;--glass:#232323ef}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;transition:background .2s,color .2s}
+button,input{font:inherit}button{cursor:pointer}
+.app{max-width:1400px;margin:auto;padding:24px}
+header{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:22px}
+.kicker{font-size:10px;letter-spacing:2px;color:var(--accent);font-weight:700}
+h1{font-size:28px;margin:9px 0;letter-spacing:-.7px}
+.subtitle{font-size:13px;color:var(--muted);line-height:1.6}
+.theme{display:flex;align-items:center;gap:9px;border:1px solid var(--border);background:var(--surface);color:var(--text);padding:11px 15px;border-radius:30px;font-size:12px;white-space:nowrap}
+.theme .symbol{color:var(--accent);font-size:18px}
+.layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(350px,1fr);gap:18px;align-items:start}
+.viewer{position:sticky;top:15px;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.toolbar{position:absolute;top:13px;left:13px;right:13px;display:flex;justify-content:space-between;gap:7px;z-index:2}
+.group{display:flex;background:var(--glass);border:1px solid var(--border);padding:4px;border-radius:9px;gap:3px}
+.group button{border:0;background:none;padding:9px 10px;border-radius:6px;font-size:11px;color:var(--muted)}
+.group button.active{background:var(--accent);color:#fff}
+.group button:hover:not(.active){background:var(--soft);color:var(--accent)}
+canvas{display:block;width:100%;height:565px;touch-action:none;cursor:grab}
+canvas:active{cursor:grabbing}
+.controls{display:flex;gap:13px;align-items:center;flex-wrap:wrap;padding:12px 16px;background:var(--surface);border-top:1px solid var(--border);font-size:11px;color:var(--muted)}
+.controls label{display:flex;align-items:center;gap:5px}
+.controls input{accent-color:var(--accent)}
+.controls input[type=range]{width:80px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:12px 15px 7px;background:var(--surface)}
+.chips button{border:1px solid var(--border);background:var(--surface2);border-radius:6px;padding:8px 9px;font-size:10px;color:var(--muted)}
+.chips button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.modelinfo{background:var(--surface);padding:6px 16px 16px;color:var(--muted);font-size:11px;line-height:1.7;min-height:65px}
+.doc{min-width:0}
+.nav{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.nav button{border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:7px;padding:10px;font-size:11px}
+.nav button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav button:hover:not(.active){background:var(--soft);color:var(--accent)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:20px;margin-bottom:13px}
+.card h2{font-size:18px;margin:0 0 13px;color:var(--heading)}
+.card h3{font-size:13px;margin:20px 0 11px;color:var(--accent)}
+.card p{font-size:12px;line-height:1.75;color:var(--muted);margin:10px 0}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:11px;line-height:1.5}
+th{background:var(--table);text-align:left;font-size:10px;padding:10px 9px;color:var(--accent)}
+td{padding:10px 9px;border-bottom:1px solid var(--border);vertical-align:top}
+td:first-child{font-weight:600;color:var(--text)}
+td:not(:first-child){color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.flow{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.flow span{font-size:10px;border:1px solid var(--border);padding:8px;border-radius:5px;color:var(--accent);background:var(--soft)}
+.flow i{font-style:normal;color:var(--muted);font-size:12px}
+.refs{font-size:11px;color:var(--muted);line-height:1.8;overflow-wrap:anywhere}
+.refs p{font-size:11px}
+.hidden{display:none}
+.legend{position:absolute;top:70px;left:17px;font-size:10px;color:var(--muted);line-height:1.8;pointer-events:none}
+.legend b{letter-spacing:1px;font-size:10px;color:var(--accent)}
+button:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.viewer{position:relative;top:0}.app{padding:15px}canvas{height:560px}.card{padding:17px}}
+@media(max-width:540px){header{align-items:flex-start;gap:8px}h1{font-size:22px}.theme{padding:8px 10px;font-size:10px}.theme .symbol{font-size:16px}.subtitle{font-size:11px}canvas{height:490px}.toolbar{left:8px;right:8px}.group button{padding:8px}.controls{gap:10px}.card{padding:13px}td,th{padding:8px 6px}}
+@media print{.app{padding:0}.layout{display:block}.viewer,.nav,.theme{display:none}.hidden{display:block!important}.card{break-inside:avoid}body,body.dark{--bg:white;--surface:white;--text:#222;--muted:#555;--heading:#222;--border:#ddd;--table:#fafafa;background:white}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<div>
+<div class="kicker">FICHA TÉCNICA PRELIMINAR · VERSIÓN INTERACTIVA</div>
+<h1>Nodo de medición eléctrica residencial</h1>
+<div class="subtitle">Dos canales de 100 A · Adquisición de tensión · ESP32 · Wi-Fi</div>
+</div>
+<button class="theme" id="theme" aria-label="Activar modo noche" aria-pressed="false">
+<span class="symbol" id="themeIcon">☾</span><span id="themeText">Modo noche</span>
+</button>
+</header>
+
+<div class="layout">
+<section class="viewer">
+<div class="toolbar">
+<div class="group" id="views">
+<button data-v="exterior" class="active">Exterior</button>
+<button data-v="interior">Interior</button>
+<button data-v="exploded">Despiece</button>
+</div>
+<div class="group">
+<button id="spin" title="Giro automático" aria-label="Giro automático">↻</button>
+<button id="reset" title="Restablecer vista" aria-label="Restablecer vista">⌂</button>
+</div>
+</div>
+<div class="legend"><b id="viewTitle">MODELO DEL MÓDULO</b><br>CT conectados</div>
+<canvas id="scene" tabindex="0" aria-label="Modelo tridimensional del nodo con sensores conectados. Arrastra para girar."></canvas>
+<div class="controls">
+<label>Zoom <input id="zoom" type="range" min="65" max="155" value="100" aria-label="Zoom"></label>
+<label><input id="labels" type="checkbox" checked> Etiquetas</label>
+<label><input id="routes" type="checkbox" checked> Rutas internas</label>
+<span style="font-size:10px;color:var(--muted)">Arrastra para girar · Toca un componente</span>
+</div>
+<div class="chips" id="chips">
+<button data-id="ct" class="active">CT + conexiones</button>
+<button data-id="voltage">Caimanes + ZMPT101B</button>
+<button data-id="analog">LM358P</button>
+<button data-id="esp">ESP32</button>
+<button data-id="case">Carcasa + USB</button>
+</div>
+<div class="modelinfo" id="modelinfo"></div>
+</section>
+
+<main class="doc">
+<nav class="nav" id="tabs">
+<button class="active" data-tab="all">Todo</button>
+<button data-tab="overview">Descripción</button>
+<button data-tab="bom">Materiales</button>
+<button data-tab="electric">Eléctricos</button>
+<button data-tab="mechanic">Mecánicos</button>
+<button data-tab="operation">Operación</button>
+<button data-tab="limits">Límites</button>
+</nav>
+
+<section class="card section" data-section="overview">
+<h2>1 Alcance y descripción general</h2>
+<p>Nodo para medir las dos líneas principales de una instalación residencial de 60 Hz y transmitir registros a una herramienta web de caracterización de demanda y dimensionamiento fotovoltaico. Integra CT de núcleo partido, módulo ZMPT101B y ESP32.</p>
+<h3>Modelo interactivo del módulo</h3>
+<div class="flow"><span>CT L1 / CT L2</span><i>→</i><span>Conectores de CT</span><i>→</i><span>Acondicionamiento</span><i>→</i><span>ESP32</span></div>
+<div class="flow"><span>Caimanes L1 / L2</span><i>→</i><span>ZMPT101B</span><i>→</i><span>Acondicionamiento / ADC</span></div>
+</section>
+
+<section class="card section" data-section="bom">
+<h2>2 Lista de materiales principal</h2><div id="bomtable"></div>
+</section>
+<section class="card section" data-section="electric">
+<h2>3 Especificaciones técnicas</h2><h3>Parámetros eléctricos</h3><div id="electable"></div>
+</section>
+<section class="card section" data-section="mechanic">
+<h2>Parámetros mecánicos</h2><div id="mechtable"></div>
+</section>
+<section class="card section" data-section="operation">
+<h2>Parámetros operativos y de comunicación</h2><div id="optable"></div>
+</section>
+
+<section class="card section" data-section="limits">
+<h2>Condiciones y límites de aplicación</h2>
+<p>El equipo está destinado al monitoreo de instalaciones residenciales de dos líneas y neutro, a 60 Hz, en interiores secos y protegidos de humedad, polvo y salpicaduras. Su funcionamiento requiere alimentación estable de 5 V DC y conexión Wi-Fi de 2,4 GHz para transmitir los registros a la nube.</p>
+<p>Cada CT debe instalarse alrededor de un único conductor de línea. La corriente no debe superar los 100 A nominales del sensor; el rango útil del equipo completo dependerá del acondicionamiento y de la calibración. La medición de consumos pequeños, especialmente cercanos a 0,5 A, puede presentar mayor incertidumbre por la baja amplitud de la señal.</p>
+<p>Las interrupciones de alimentación detienen la adquisición. La pérdida de Wi-Fi interrumpe el envío a la nube; la recuperación de registros dependerá de que el respaldo local esté implementado y tenga capacidad disponible.</p>
+<p>El nodo es una herramienta de monitoreo y apoyo al predimensionamiento fotovoltaico. No sustituye un medidor certificado para facturación, las protecciones del tablero ni un diseño eléctrico definitivo. Su instalación y mantenimiento deben realizarse con el circuito desenergizado y por personal competente.</p>
+</section>
+
+<section class="card section" data-section="references">
+<h2>Documentación de referencia</h2>
+<div class="refs">
+<p>[1] Espressif Systems. ESP32-WROOM-32 Datasheet. https://documentation.espressif.com/esp32-wroom-32_datasheet_en.html</p>
+<p>[2] Ficha de familia SCT013 y hoja del transformador ZMPT101B suministradas por el equipo.</p>
+<p>[3] Tabla de especificaciones, Sprint 2 e informe del Reto 1 del proyecto.</p>
+</div>
+</section>
+</main>
+</div>
+</div>
+
+<script>
+(()=>{
+"use strict";
+const $=s=>document.getElementById(s);
+let palette={};
+
+function updatePalette(){
+const css=getComputedStyle(document.body);
+for(const name of ["scene1","scene2","grid","label","labeltext","border","muted","accent"])
+palette[name]=css.getPropertyValue("--"+name).trim();
+}
+function setTheme(dark){
+document.body.classList.toggle("dark",dark);
+$("themeIcon").textContent=dark?"☀":"☾";
+$("themeText").textContent=dark?"Modo día":"Modo noche";
+$("theme").setAttribute("aria-label",dark?"Activar modo día":"Activar modo noche");
+$("theme").setAttribute("aria-pressed",String(dark));
+try{localStorage.setItem("nodo-c2-theme",dark?"dark":"light")}catch(e){}
+updatePalette();
+}
+let initialDark=false;
+try{initialDark=localStorage.getItem("nodo-c2-theme")==="dark"}catch(e){}
+setTheme(initialDark);
+$("theme").onclick=()=>setTheme(!document.body.classList.contains("dark"));
+
+const data={
+bomtable:{h:["Componente","Cant.","Función"],r:[
+["ESP32 DevKit","1","Adquisición, procesamiento y comunicación."],
+["CT SCT-013 de 100 A/1 V","2","Corriente independiente en cada línea."],
+["Módulo ZMPT101B","1","Adquisición de tensión entre líneas."],
+["LM358P, operacional doble","1","Dos seguidores."],
+["PCB, acondicionamiento y conectores","1 conjunto","Interconexión, desacoplamiento, filtro y protección."],
+["Fuente USB de 5 V y carcasa aislante","1 de cada","Alimentación y protección mecánica; selección final pendiente."]
+]},
+electable:{h:["Parámetro","Especificación","Condición"],r:[
+["Red y frecuencia","Dos líneas y neutro · 60 Hz","Aplicación residencial prevista."],
+["Tensión de referencia","120/240 V AC","Confirmar la tensión real del tablero."],
+["Corriente nominal máxima","100 A por canal · 2 canales","Nominal del CT."],
+["Límite inferior objetivo","0,5 A por canal","Exactitud y repetibilidad."],
+["Salida y sensibilidad del CT","1 V eficaz a 100 A · 10 mV/A","A 0,5 A: 5 mV eficaces, cálculo nominal."],
+["Cobertura teórica a 120/240 V","12 kVA por línea · 24 kVA total","12 kW + 12 kW solo con factor de potencia unitario; no es potencia suministrada."],
+["Medición de tensión","1 módulo ZMPT101B","Rango y salida."],
+["Alimentación","5 V DC por USB","Adaptador USB de 5 V, 1 A."],
+["Consumo estimado","1–3 W","Estimación preliminar."],
+["Conversión analógica","ADC integrado de 12 bits nominales","Resolución nominal ≠ exactitud."],
+["Exactitud objetivo","Error de energía activa ≤ 2 %","Frente al patrón; integración y ensayo."]
+]},
+mechtable:{h:["Parámetro","Especificación propuesta","Condición"],r:[
+["Montaje","Fijación dentro de gabinete protegido",""],
+["Sensores de corriente","Núcleo partido","Un sensor alrededor de cada conductor de línea."],
+["Conexiones","USB, conectores de CT y borneras",""],
+["Grado de protección","Objetivo mínimo IP20","Requiere gabinete adecuado y verificación; uso interior."]
+]},
+optable:{h:["Parámetro","Especificación","Condición"],r:[
+["Ambiente de uso","Interior seco y protegido","Sin exposición directa a intemperie o salpicaduras."],
+["Temperatura de operación","0 a 40 °C","Objetivo conservador del conjunto."],
+["Humedad relativa","20–80 %, sin condensación","Objetivo ambiental."],
+["Refrigeración","Pasiva, sin ventilador","Evaluación térmica pendiente."],
+["Comunicación principal","Wi-Fi 2,4 GHz · IEEE 802.11 b/g/n","Capacidad del ESP32 clásico [1]."],
+["Bluetooth","Bluetooth 4.2 / BLE","Disponible en ESP32 clásico [1]."],
+["Destino de registros","Hoja de cálculo en la nube y herramienta web","Arquitectura C2 seleccionada."],
+["Protocolo de aplicación","HTTPS","Implementación e integración."],
+["Intervalo de registro","≤ 1 minuto","Objetivo distinto de la frecuencia de muestreo interno."],
+["Continuidad de registro","≥ 7 días; pérdidas ≤ 1 %","Requisito del proyecto."],
+["Respaldo local","Previsto ante pérdida de Wi-Fi","."]
+]}
+};
+
+for(const [id,t] of Object.entries(data)){
+const wrap=document.createElement("div");wrap.className="tablewrap";
+const table=document.createElement("table"),head=document.createElement("thead"),hr=document.createElement("tr");
+for(const s of t.h){const th=document.createElement("th");th.textContent=s;hr.append(th)}
+head.append(hr);table.append(head);
+const body=document.createElement("tbody");
+for(const row of t.r){
+const tr=document.createElement("tr");
+for(const s of row){const td=document.createElement("td");td.textContent=s;tr.append(td)}
+body.append(tr);
+}
+table.append(body);wrap.append(table);$(id).append(wrap);
+}
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{
+const tab=b.dataset.tab;
+document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("active",x===b));
+document.querySelectorAll(".section").forEach(s=>s.classList.toggle("hidden",tab!=="all"&&s.dataset.section!==tab));
+});
+
+const cv=$("scene"),g=cv.getContext("2d");
+let W=650,H=565,yaw=-.34,pitch=.20,zoom=1,view="exterior",selected="ct",auto=false,drag=null,faces=[],hits=[],explosion=0,last=0;
+const inf={
+ct:"Los dos CT están conectados mediante cables completos a dos conectores del nodo. En «Interior» se ve la ruta conceptual de cada entrada hacia uno de los dos seguidores y, después, hacia el ESP32. Los colores distinguen canales, no polaridades.",
+voltage:"Dos caimanes conectados a la entrada del ZMPT101B: rojo para L1 y negro para L2. El negro no representa GND.",
+analog:"LM358P, operacional doble: dos seguidores. Las líneas internas muestran continuidad funcional.",
+esp:"ESP32 DevKit: adquisición, procesamiento y comunicación. Los dos canales de corriente y el canal de tensión llegan a esta etapa a través del acondicionamiento correspondiente.",
+case:"Carcasa aislante y fuente USB de 5 V."
+};
+function select(id){
+selected=id;$("modelinfo").textContent=inf[id];
+document.querySelectorAll("#chips button").forEach(b=>b.classList.toggle("active",b.dataset.id===id));
+}
+select("ct");
+function setView(v){
+view=v;
+document.querySelectorAll("#views button").forEach(b=>b.classList.toggle("active",b.dataset.v===v));
+$("viewTitle").textContent=v==="exterior"?"MODELO DEL MÓDULO":v==="interior"?"CONEXIONES INTERNAS CONCEPTUALES":"DESPIECE CONCEPTUAL";
+}
+document.querySelectorAll("#views button").forEach(b=>b.onclick=()=>setView(b.dataset.v));
+document.querySelectorAll("#chips button").forEach(b=>b.onclick=()=>{
+select(b.dataset.id);
+if(["esp","analog","voltage"].includes(selected)&&view==="exterior")setView("interior");
+});
+$("spin").onclick=()=>{auto=!auto;$("spin").classList.toggle("active",auto)};
+$("reset").onclick=()=>{
+yaw=-.34;pitch=.20;zoom=1;$("zoom").value=100;auto=false;
+$("spin").classList.remove("active");setView("exterior");select("ct");
+};
+$("zoom").oninput=e=>zoom=+e.target.value/100;
+
+function resize(){
+const r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);
+W=r.width;H=r.height;cv.width=W*d;cv.height=H*d;g.setTransform(d,0,0,d,0,0);
+}
+new ResizeObserver(resize).observe(cv);resize();
+function rot(p){
+const c=Math.cos(yaw),s=Math.sin(yaw),a=Math.cos(pitch),b=Math.sin(pitch),
+x=p[0]*c+p[2]*s,z=-p[0]*s+p[2]*c;
+return[x,p[1]*a-z*b,p[1]*b+z*a];
+}
+function project(p){
+const q=rot(p),s=Math.min(W/365,H/340)*zoom*680/(680-q[2]);
+return[W/2+q[0]*s,H*.54-q[1]*s,q[2]];
+}
+function shade(c,l){
+const n=parseInt(c.slice(1),16);
+return`rgb(${Math.min(255,(n>>16)*l)},${Math.min(255,(n>>8&255)*l)},${Math.min(255,(n&255)*l)})`;
+}
+function poly(ps,c,id,n){
+const norm=rot(n);if(norm[2]<-.01)return;
+const p=ps.map(project);
+faces.push({p,c:shade(c,.70+.23*Math.max(0,norm[2])+.13*Math.max(0,norm[1])+.1*Math.max(0,-norm[0])),id,z:p.reduce((s,a)=>s+a[2],0)/p.length});
+}
+function box(x,y,z,w,h,d,c,id){
+const a=x-w/2,b=x+w/2,e=y-h/2,f=y+h/2,u=z-d/2,v=z+d/2;
+poly([[a,e,v],[b,e,v],[b,f,v],[a,f,v]],c,id,[0,0,1]);
+poly([[b,e,u],[a,e,u],[a,f,u],[b,f,u]],c,id,[0,0,-1]);
+poly([[a,e,u],[a,e,v],[a,f,v],[a,f,u]],c,id,[-1,0,0]);
+poly([[b,e,v],[b,e,u],[b,f,u],[b,f,v]],c,id,[1,0,0]);
+poly([[a,f,v],[b,f,v],[b,f,u],[a,f,u]],c,id,[0,1,0]);
+poly([[a,e,u],[b,e,u],[b,e,v],[a,e,v]],c,id,[0,-1,0]);
+}
+function cylinder(x,y,z,r,d,c,id){
+const a=[],b=[],N=16;
+for(let i=0;i<N;i++){
+const t=i/N*2*Math.PI,t2=(i+1)/N*2*Math.PI,
+p=[x+r*Math.cos(t),y+r*Math.sin(t),z+d/2],
+q=[x+r*Math.cos(t2),y+r*Math.sin(t2),z+d/2];
+a.push(p);b.push([p[0],p[1],z-d/2]);
+poly([p,q,[q[0],q[1],z-d/2],[p[0],p[1],z-d/2]],c,id,[Math.cos((t+t2)/2),Math.sin((t+t2)/2),0]);
+}
+poly(a,c,id,[0,0,1]);poly(b,c,id,[0,0,-1]);
+}
+function segment(a,b,c,lw=2,dash=[]){
+const p=project(a),q=project(b);
+faces.push({line:[p,q],c,lw,dash,z:(p[2]+q[2])/2});
+}
+function wire(ps,c,lw=2.5){
+for(let i=0;i<ps.length-1;i++)segment(ps[i],ps[i+1],c,lw);
+}
+function board(x,y,z,w,h,id,c){
+box(x,y,z,w,h,2,c,id);
+for(const s of [-1,1])for(let i=0;i<7;i++)
+box(x+s*(w/2-2),y-h/2+4+i*(h-8)/6,z+2,1.5,2,2,"#bba667",id);
+}
+const channel1="#4c9cc9",channel2="#e58c38";
+function ct(x,end,c){
+const y=-38;
+box(x,y+17,0,40,10,23,"#3887aa","ct");
+box(x,y-17,0,40,10,23,"#3887aa","ct");
+box(x-15,y,0,10,24,23,"#3887aa","ct");
+box(x+15,y,0,10,24,23,"#3887aa","ct");
+box(x+22,y,0,5,15,16,"#33434a","ct");
+box(x,y-17,12,27,7,1,"#e8e8e8","ct");
+box(x,y-25,0,7,8,8,"#343434","ct");
+const cable=[[x,y-29,0],[x,-83,0],[x*.86,-104,0],[x*.5,-113,0],[end,-109,0],[end,-94,0]];
+wire(cable,"#343434",4);wire(cable,c,1.6);
+box(end,-89,0,8,12,9,"#383838","ct");
+box(end,-81,0,9,6,10,"#a1a1a1","ct");
+box(end,-76,0,12,8,12,"#3a3a3a","ct");
+}
+function clip(x,c){
+const y=100,z=4;
+box(x,y-8,z,12,28,13,c,"voltage");
+box(x,y-24,z,7,7,9,c,"voltage");
+box(x,y+9,z,11,12,11,c,"voltage");
+box(x,y+17,z-3.6,7,10,2,"#bec2c4","voltage");
+box(x,y+17,z+3.6,7,10,2,"#cbd0d2","voltage");
+for(let i=0;i<4;i++){
+box(x,y+13+i*2,z-2.2,7,.7,1,"#959c9f","voltage");
+box(x,y+13+i*2,z+2.2,7,.7,1,"#959c9f","voltage");
+}
+cylinder(x,y+4,z+7,1.8,1,"#93999c","voltage");
+}
+function build(){
+faces=[];explosion+=((view==="exploded"?1:0)-explosion)*.12;
+const dz=explosion*45,vz=-5+dz*.7,signalz=vz+8;
+box(0,0,-28,100,160,4,"#dddddd","case");
+box(-48,0,0,4,156,56,"#e8e8e8","case");
+box(48,0,0,4,156,56,"#e8e8e8","case");
+box(0,78,0,92,4,56,"#eeeeee","case");
+box(0,-78,0,92,4,56,"#dcdcdc","case");
+
+if(view!=="exterior"){
+board(0,0,-13+dz*.3,82,132,"analog","#465f65");
+board(-19,22,vz,26,52,"esp","#30454c");
+box(-19,29,vz+4,19,23,5,"#c6cacc","esp");
+box(-19,44,vz+4,19,8,4,"#293032","esp");
+for(let i=0;i<4;i++)box(-25+i*4,44,vz+6.2,1,6,.3,"#bcac6a","esp");
+box(-19,-5,vz+3,9,6,5,"#b9bec0","esp");
+board(20,24,vz,28,46,"voltage","#335f93");
+box(20,27,vz+11,20,18,19,"#337eb1","voltage");
+box(20,43,vz+5,20,7,8,"#4a7376","voltage");
+cylinder(16,43,vz+9.5,1.8,1,"#c1c4c6","voltage");
+cylinder(24,43,vz+9.5,1.8,1,"#c1c4c6","voltage");
+box(-7,-29,vz+4,18,12,6,"#282c2e","analog");
+for(const side of [-1,1])for(let i=0;i<4;i++)
+box(-14+i*4.5,-29+side*8,vz+2,1.2,4,1,"#b1b6b9","analog");
+for(let i=0;i<3;i++)box(17+i*6,-30,vz+3,3,8,3,"#baa379","analog");
+wire([[31,80,-7],[31,62,-7],[16,55,vz+5],[16,43,vz+9]],"#b94439",2.4);
+wire([[39,80,-7],[39,59,-7],[24,52,vz+5],[24,43,vz+9]],"#333333",2.4);
+if($("routes").checked){
+wire([[-29,-73,0],[-29,-60,signalz],[-29,-46,signalz],[-12,-46,signalz],[-12,-35,signalz]],channel1,3);
+wire([[0,-73,0],[0,-59,signalz],[12,-49,signalz],[12,-40,signalz],[-2,-40,signalz],[-2,-35,signalz]],channel2,3);
+wire([[-12,-23,signalz],[-28,-16,signalz],[-28,1,signalz]],channel1,2.5);
+wire([[-2,-23,signalz],[-10,-15,signalz],[-10,1,signalz]],channel2,2.5);
+wire([[20,2,signalz],[20,-9,signalz],[6,-9,signalz],[-6,12,signalz]],"#c8a45d",2.5);
+for(const p of [[-29,-60,signalz],[0,-59,signalz],[-12,-35,signalz],[-2,-35,signalz]])
+cylinder(p[0],p[1],p[2],1.7,1,"#c4c8ca","analog");
+}
+}
+
+if(view!=="interior"){
+const z=29+dz*2;
+box(0,0,z,100,160,3,"#f6f6f6","case");
+box(0,9,z+2,44,112,2,"#eb7a27","case");
+box(0,9,z+3.3,40,108,1,"#303030","case");
+box(0,35,z+4,24,2,.3,"#dddddd","case");
+box(0,29,z+4,15,1,.3,"#a3a3a3","case");
+for(let i=0;i<3;i++)box(-7+i*7,-14,z+4,3,15-i*3,.3,"#eb8b43","case");
+for(const x of [-40,40])for(const y of [-69,69])
+cylinder(x,y,z+2,1.5,1,"#b2b2b2","case");
+}
+box(31,81,-7,7,6,8,"#5b5b5b","voltage");
+box(39,81,-7,7,6,8,"#5b5b5b","voltage");
+box(28,-82,0,14,6,10,"#3c3c3c","case");
+box(28,-85.2,0,9,1,6,"#a6a6a6","case");
+clip(-106,"#b94439");clip(108,"#3e3e3e");
+wire([[-106,73,4],[-106,60,4],[-88,54,5],[-70,66,4],[-60,100,-7],[5,109,-7],[26,100,-7],[31,83,-7]],"#b34738",2.7);
+wire([[108,73,4],[108,62,4],[90,57,5],[73,67,3],[68,98,-7],[48,105,-7],[39,95,-7],[39,83,-7]],"#383838",2.7);
+ct(-111,-29,channel1);ct(111,0,channel2);
+if(view==="exploded")for(const x of [-35,35])
+segment([x,56,-25],[x,56,29+dz*2],"#b3a08e",1,[4,4]);
+}
+function label(txt,p,dx,dy){
+const a=project(p);g.font="10px Arial";
+const tw=g.measureText(txt).width,
+x=Math.max(8,Math.min(W-tw-24,a[0]+dx)),
+y=Math.max(96,Math.min(H-40,a[1]+dy));
+g.beginPath();g.moveTo(a[0],a[1]);g.lineTo(x+10,y+11);
+g.strokeStyle=palette.accent;g.lineWidth=.8;g.stroke();
+g.beginPath();g.arc(a[0],a[1],2,0,7);g.fillStyle=palette.accent;g.fill();
+g.beginPath();g.roundRect(x,y,tw+16,23,5);g.fillStyle=palette.label;g.fill();
+g.strokeStyle=palette.border;g.stroke();g.fillStyle=palette.labeltext;g.fillText(txt,x+8,y+15);
+}
+function render(t){
+const dt=Math.min(t-last||16,40);last=t;if(auto&&!drag)yaw+=dt*.0002;
+g.clearRect(0,0,W,H);
+const bg=g.createRadialGradient(W*.48,H*.43,10,W*.5,H*.5,W*.7);
+bg.addColorStop(0,palette.scene1);bg.addColorStop(1,palette.scene2);
+g.fillStyle=bg;g.fillRect(0,0,W,H);
+g.fillStyle=palette.grid;g.globalAlpha=.30;
+for(let x=20;x<W;x+=25)for(let y=108;y<H-30;y+=25)g.fillRect(x,y,1,1);
+g.globalAlpha=1;build();faces.sort((a,b)=>a.z-b.z);hits=[];
+for(const f of faces){
+if(f.line){
+g.beginPath();g.moveTo(f.line[0][0],f.line[0][1]);g.lineTo(f.line[1][0],f.line[1][1]);
+g.strokeStyle=f.c;g.lineWidth=f.lw;g.lineCap="round";g.setLineDash(f.dash);g.stroke();g.setLineDash([]);continue;
+}
+g.beginPath();f.p.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();
+g.fillStyle=f.c;g.fill();g.strokeStyle=selected===f.id?"#e98a4a95":"#33333320";
+g.lineWidth=selected===f.id?.8:.4;g.stroke();hits.push(f);
+}
+if($("labels").checked){
+if(view==="exterior"){
+label("Caimán L1",[-106,107,12],-42,-48);
+label("Caimán L2",[108,107,12],-30,-48);
+label("CT L1 · 100 A / 1 V",[-111,-38,12],-60,49);
+label("CT L2 · 100 A / 1 V",[111,-38,12],-45,49);
+label("Conectores CT",[-15,-88,5],-15,49);
+}else{
+label("CT L1",[-111,-38,12],-33,-44);
+label("CT L2",[111,-38,12],-20,-44);
+label("ZMPT101B",[20,40,8+explosion*31.5],30,-31);
+label("ESP32",[-19,26,3+explosion*31.5],-90,-10);
+label("Dos seguidores",[-7,-29,3+explosion*31.5],36,10);
+label("Entradas CT conectadas",[-15,-76,3],-68,65);
+}
+}
+g.fillStyle=palette.muted;g.font="10px Arial";
+g.fillText("Propuesta visual · Sin escala de fabricación",15,H-15);
+requestAnimationFrame(render);
+}
+function inside(p,vs){
+let n=false;
+for(let i=0,j=vs.length-1;i<vs.length;j=i++){
+const a=vs[i],b=vs[j];
+if((a[1]>p[1])!==(b[1]>p[1])&&p[0]<(b[0]-a[0])*(p[1]-a[1])/(b[1]-a[1])+a[0])n=!n;
+}
+return n;
+}
+cv.onpointerdown=e=>{
+cv.setPointerCapture(e.pointerId);
+drag={x:e.clientX,y:e.clientY,ox:e.clientX,oy:e.clientY};
+auto=false;$("spin").classList.remove("active");
+};
+cv.onpointermove=e=>{
+if(!drag)return;
+yaw+=(e.clientX-drag.x)*.009;
+pitch=Math.max(-1.1,Math.min(1.1,pitch+(e.clientY-drag.y)*.006));
+drag.x=e.clientX;drag.y=e.clientY;
+};
+cv.onpointerup=e=>{
+if(drag&&Math.hypot(e.clientX-drag.ox,e.clientY-drag.oy)<5){
+const r=cv.getBoundingClientRect(),p=[e.clientX-r.left,e.clientY-r.top];
+for(let i=hits.length-1;i>=0;i--)if(inside(p,hits[i].p)){select(hits[i].id);break}
+}
+drag=null;
+};
+cv.onpointercancel=()=>drag=null;
+cv.addEventListener("wheel",e=>{
+e.preventDefault();zoom=Math.max(.65,Math.min(1.55,zoom-e.deltaY*.001));$("zoom").value=zoom*100;
+},{passive:false});
+cv.onkeydown=e=>{
+if(e.key.startsWith("Arrow"))e.preventDefault();
+if(e.key==="ArrowLeft")yaw-=.1;
+if(e.key==="ArrowRight")yaw+=.1;
+if(e.key==="ArrowUp")pitch=Math.max(-1.1,pitch-.1);
+if(e.key==="ArrowDown")pitch=Math.min(1.1,pitch+.1);
+};
+requestAnimationFrame(render);
+})();
+</script>
+</body>
+</html>
